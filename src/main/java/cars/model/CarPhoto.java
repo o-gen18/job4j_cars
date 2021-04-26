@@ -1,7 +1,9 @@
 package cars.model;
 
 import javax.persistence.*;
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Objects;
 
 @Entity
@@ -11,7 +13,16 @@ public class CarPhoto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Lob
     private byte[] photo;
+
+    public void loadPhoto(String path) {
+        try (FileInputStream in = new FileInputStream(new File(path))) {
+            photo = in.readAllBytes();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public int getId() {
         return id;
@@ -48,9 +59,6 @@ public class CarPhoto {
 
     @Override
     public String toString() {
-        return "CarPhoto{" +
-                "id=" + id +
-                ", photo=" + Arrays.toString(photo) +
-                '}';
+        return String.format("CarPhoto{id=%d}", id);
     }
 }

@@ -6,15 +6,36 @@ import java.util.Objects;
 @Entity
 @Table(name = "car_model")
 public class CarModel {
+    public enum CarDrive {
+        FRONT_WHEEL_DRIVE, REAR_WHEEL_DRIVE, ALL_WHEEL_DRIVE
+    }
+
+    public enum SteeringWheel {
+        LEFT_HAND_DRIVE, RIGHT_HAND_DRIVE
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(nullable = false)
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "car_id", foreignKey = @ForeignKey(name = "CAR_ID_FK"))
-    private Car car;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CarDrive carDrive;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private SteeringWheel steeringWheel;
+
+    public static CarModel of(String name, CarDrive carDrive, SteeringWheel steeringWheel, Engine engine) {
+        CarModel model = new CarModel();
+        model.name = name;
+        model.carDrive = carDrive;
+        model.steeringWheel = steeringWheel;
+        return model;
+    }
 
     public int getId() {
         return id;
@@ -32,12 +53,20 @@ public class CarModel {
         this.name = name;
     }
 
-    public Car getCar() {
-        return car;
+    public CarDrive getCarDrive() {
+        return carDrive;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setCarDrive(CarDrive carDrive) {
+        this.carDrive = carDrive;
+    }
+
+    public SteeringWheel getSteeringWheel() {
+        return steeringWheel;
+    }
+
+    public void setSteeringWheel(SteeringWheel steeringWheel) {
+        this.steeringWheel = steeringWheel;
     }
 
     @Override
@@ -59,9 +88,9 @@ public class CarModel {
 
     @Override
     public String toString() {
-        return "CarModel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return String.format(
+                "CarModel{id=%d, name='%s', "
+                        + "carDrive=%s, steeringWheel=%s}",
+                id, name, carDrive, steeringWheel);
     }
 }

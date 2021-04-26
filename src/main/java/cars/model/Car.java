@@ -1,33 +1,46 @@
 package cars.model;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "car")
 public class Car {
+    public enum BodyType {
+        SEDAN, COUPE, SPORTS_CAR, STATION_WAGON,
+        HATCHBACK, CONVERTIBLE, MINIVAN, PICKUP
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(nullable = false)
     private String name;
 
-    private String description;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "engine_id", foreignKey = @ForeignKey(name = "ENGINE_ID_FK"))
+    private Engine engine;
 
-    private boolean sold;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_model_id", foreignKey = @ForeignKey(name = "CAR_MODEL_ID_FK"))
+    private CarModel carModel;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_photo_id", foreignKey = @ForeignKey(name = "CAR_PHOTO_ID_FK"))
     private CarPhoto photo;
 
-    @ManyToOne
-    @JoinColumn(name = "seller_id", foreignKey = @ForeignKey(name = "SELLER_ID_FK"))
-    private Seller seller;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private BodyType bodyType;
 
-    public static Car of(String name, String description, boolean sold) {
+    public static Car of(String name, Engine engine, CarModel model, CarPhoto photo, BodyType bodyType) {
         Car car = new Car();
         car.name = name;
-        car.description = description;
-        car.sold = sold;
+        car.engine = engine;
+        car.carModel = model;
+        car.photo = photo;
+        car.bodyType = bodyType;
         return car;
     }
 
@@ -47,22 +60,6 @@ public class Car {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean isSold() {
-        return sold;
-    }
-
-    public void setSold(boolean sold) {
-        this.sold = sold;
-    }
-
     public CarPhoto getPhoto() {
         return photo;
     }
@@ -71,12 +68,28 @@ public class Car {
         this.photo = photo;
     }
 
-    public Seller getSeller() {
-        return seller;
+    public Engine getEngine() {
+        return engine;
     }
 
-    public void setSeller(Seller seller) {
-        this.seller = seller;
+    public void setEngine(Engine engine) {
+        this.engine = engine;
+    }
+
+    public CarModel getCarModel() {
+        return carModel;
+    }
+
+    public void setCarModel(CarModel carModel) {
+        this.carModel = carModel;
+    }
+
+    public BodyType getBodyType() {
+        return bodyType;
+    }
+
+    public void setBodyType(BodyType bodyType) {
+        this.bodyType = bodyType;
     }
 
     @Override
@@ -98,12 +111,11 @@ public class Car {
 
     @Override
     public String toString() {
-        return "Car{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", sold=" + sold +
-                ", seller=" + seller +
-                '}';
+        String photoId = photo == null ? "No photo" : String.valueOf(photo.getId());
+        return String.format(
+                "Car{id=%d, %n name='%s', "
+                        + "%n engine=%s, %n carModel=%s, "
+                        + "%n photoId=%s, %n bodyType=%s}",
+                id, name, engine, carModel, photoId, bodyType);
     }
 }

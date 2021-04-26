@@ -1,7 +1,7 @@
 package cars.model;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "seller")
@@ -10,9 +10,27 @@ public class Seller {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "seller", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Advert> ads = new ArrayList<>();
+
+    public void addAd(Advert advert) {
+        this.ads.add(advert);
+        advert.setSeller(this);
+    }
+
+    public void removeAd(Advert advert) {
+        this.ads.remove(advert);
+        advert.setSeller(null);
+    }
 
     public static Seller of(String name, String email, String password) {
         Seller seller = new Seller();
@@ -54,6 +72,14 @@ public class Seller {
         this.password = password;
     }
 
+    public List<Advert> getAds() {
+        return ads;
+    }
+
+    public void setAds(List<Advert> ads) {
+        this.ads = ads;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -73,9 +99,10 @@ public class Seller {
 
     @Override
     public String toString() {
-        return "Seller{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        String[] adsNames = ads.stream().map(Advert::getName).toArray(String[]::new);
+        return String.format(
+                "Seller{id=%d, %n name='%s', "
+                        + "%n email='%s', %n password='%s', %n ads=%s}",
+                id, name, email, password, Arrays.toString(adsNames));
     }
 }
