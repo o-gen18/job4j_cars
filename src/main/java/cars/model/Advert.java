@@ -11,11 +11,17 @@ public class Advert {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 40)
     private String name;
+
+    @Column(nullable = false)
+    private int price;
 
     @Column(columnDefinition = "TEXT")
     private String description;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String address;
 
     @Column(nullable = false)
     private boolean sold;
@@ -24,17 +30,21 @@ public class Advert {
     @Column(nullable = false)
     private Date created;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Car car;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "seller_id", foreignKey = @ForeignKey(name = "SELLER_ID_FK"))
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "seller_id",
+            foreignKey = @ForeignKey(name = "SELLER_ID_FK"), nullable = false)
     private Seller seller;
 
-    public static Advert of(String name, String description, Date created, Car car, Seller seller) {
+    public static Advert of(String name, int price, String description,
+                            String address, Date created, Car car, Seller seller) {
         Advert advert = new Advert();
         advert.name = name;
+        advert.price = price;
         advert.description = description;
+        advert.address = address;
         advert.created = created;
         advert.car = car;
         advert.seller = seller;
@@ -57,12 +67,28 @@ public class Advert {
         this.name = name;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public boolean isSold() {
@@ -117,9 +143,9 @@ public class Advert {
     @Override
     public String toString() {
         return String.format(
-                "Advert{id=%d, %n name='%s', "
-                        + "%n description='%s', %n sold=%s, "
+                "Advert{id=%d, %n name='%s', %n price=%s"
+                        + "%n description='%s', %n address=%s, %n sold=%s, "
                         + "created=%s, %n car=%s, %n seller=%s}",
-                id, name, description, sold, created, car, seller);
+                id, name, price, description, address, sold, created, car, seller);
     }
 }

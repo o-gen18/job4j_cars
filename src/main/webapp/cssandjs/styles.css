@@ -1,0 +1,102 @@
+html {
+    height: 100%;
+}
+body {
+    background-color: #FFDEE9;
+    background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100%;
+}
+
+#fixed-header {
+    position: fixed;
+    z-index: 1;
+    padding: 10px 16px;
+    width: 100%;
+    height: 70px;
+    box-sizing: border-box;
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+    border-bottom: 2px solid #000000;
+    box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+}
+
+#hello {
+    right: 26%;
+    bottom: 5%;
+    position: absolute;
+    font-family: 'Brush Script MT', cursive;
+    display: inline-block;
+}
+
+.header {
+    font-family: 'Brush Script MT', cursive;
+    display: inline-block;
+}
+
+.search {
+    display: inline-block;
+    position: relative;
+    left: 20px;
+    bottom: 5%;
+}
+
+.btn-grad {background-image: linear-gradient(to right, #E55D87 0%, #5FC3E4  51%, #E55D87  100%)}
+.btn-grad {
+    cursor: pointer;
+    margin: 5px;
+    padding: 7px 25px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    float: right;
+}
+
+.btn-grad:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+
+#loginBackground, #registerBackground, #detailsBackground {
+    display: none;
+    position: fixed;
+    overflow: auto;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+#login, #register, #details ,#createAd {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto;
+    border: 1px solid #888;
+    width: 60%;
+    padding: 5%;
+    border-radius: 10px;
+}
+
+.box {
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    margin-top: 80px;
+    justify-content: center;
+}
+
+.card-margin {
+    margin: 15px;
+    width: 18rem;
+    flex: 0 0 auto;
+}

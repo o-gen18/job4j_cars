@@ -1,5 +1,7 @@
 package cars.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -13,13 +15,18 @@ public class Seller {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
+    private String phone;
 
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "seller", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "seller", fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Advert> ads = new ArrayList<>();
 
     public void addAd(Advert advert) {
@@ -32,10 +39,11 @@ public class Seller {
         advert.setSeller(null);
     }
 
-    public static Seller of(String name, String email, String password) {
+    public static Seller of(String name, String email, String phone, String password) {
         Seller seller = new Seller();
         seller.name = name;
         seller.email = email;
+        seller.phone = phone;
         seller.password = password;
         return seller;
     }
@@ -62,6 +70,14 @@ public class Seller {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {
@@ -102,7 +118,7 @@ public class Seller {
         String[] adsNames = ads.stream().map(Advert::getName).toArray(String[]::new);
         return String.format(
                 "Seller{id=%d, %n name='%s', "
-                        + "%n email='%s', %n password='%s', %n ads=%s}",
-                id, name, email, password, Arrays.toString(adsNames));
+                        + "%n email='%s', %n phone=%s, %n password='%s', %n ads=%s}",
+                id, name, email, phone, password, Arrays.toString(adsNames));
     }
 }

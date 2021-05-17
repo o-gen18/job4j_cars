@@ -4,10 +4,11 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "engines", uniqueConstraints = {@UniqueConstraint(columnNames = {"fueltype", "volume"})})
+@Table(name = "engines", uniqueConstraints =
+        {@UniqueConstraint(columnNames = {"fueltype", "volume"})})
 public class Engine {
     public enum FuelType {
-        GASOLINE, DIESEL, HYBRID
+        Gasoline, Diesel, Hybrid
     }
 
     @Id
@@ -61,12 +62,14 @@ public class Engine {
             return false;
         }
         Engine engine = (Engine) o;
-        return this.id == engine.id;
+        return id == engine.id
+                && Double.compare(engine.volume, volume) == 0
+                && fuelType == engine.fuelType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, fuelType, volume);
     }
 
     @Override
