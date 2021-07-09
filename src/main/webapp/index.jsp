@@ -25,10 +25,10 @@
         <div class="search">
             <div class="input-group">
                 <div class="form-outline">
-                    <input type="search" id="form1" class="form-control" placeholder="Find a car..."/>
+                    <input type="search" id="findCar" class="form-control" placeholder="Find a car..."/>
                 </div>
                 <span>
-                <button type="button" class="btn btn-outline-light">
+                <button type="button" class="btn btn-outline-light" onclick="filterAds($('#findCar').val())">
                     <i class="fas fa-search"></i>
                 </button>
                 </span>

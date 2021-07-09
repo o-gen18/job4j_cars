@@ -19,7 +19,7 @@ public class SignUpServlet extends HttpServlet {
         String password = req.getParameter("password");
         String phone = req.getParameter("phone-number");
         Seller seller = AdRepository.instOf()
-                .findSellerByEmail(email);
+                .findSellerByEmail(email); //can be optimised by using exception
         if (seller != null) {
             req.setAttribute("signUpError", "User with this email already exists!");
             req.getRequestDispatcher("index.jsp").forward(req, resp);

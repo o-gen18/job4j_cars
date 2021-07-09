@@ -100,7 +100,7 @@ public class AdRepository implements AutoCloseable {
                                 + "FULL JOIN FETCH c.photo " //'FULL' to allow retrieve cars without photos
                                 + "JOIN FETCH c.carModel "
                                 + "JOIN FETCH c.engine "
-                                + "JOIN FETCH ad.seller s ", Advert.class
+                                + "JOIN FETCH ad.seller s ORDER BY ad.created DESC", Advert.class
                 ).list()
         );
     }

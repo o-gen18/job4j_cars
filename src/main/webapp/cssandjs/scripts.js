@@ -62,8 +62,8 @@ function fetchAds() {
                 '            <img class="card-img-top" src="data:image/jpeg;base64,' + jsonResp[i].car.photo.photo + '" alt="Here might be a photo" onerror="this.onerror=null;this.src=\'img/noPhoto.jpeg\';" style="max-width: 100%; height: 15rem">\n' +
                 '            <div class="card-body">\n' +
                 '                <h5 class="card-title"><b>' + jsonResp[i].name + '</b></h5>\n' +
-                '                <p class="card-text" hidden="true"><b>Published: </b>' + new Date(jsonResp[i].created) + '</p>\n' +
-                '                <p class="card-text"><b>Car brand: </b>' + jsonResp[i].car.name + '</p>\n' +
+                '                <p class="card-text" hidden="true"><b>Published: </b>' + new Date(jsonResp[i].created).toUTCString() + '</p>\n' +
+                '                <p class="card-text car-brand"><b>Car brand: </b>' + jsonResp[i].car.name + '</p>\n' +
                 '                <p class="card-text"><b>Model: </b>' + jsonResp[i].car.carModel.name + '</p>\n' +
                 '                <p class="card-text"><b>Year of issue: </b>' + jsonResp[i].car.yearOfIssue + '</p>\n' +
                 '                <p class="card-text"><b>Mileage: </b>' + jsonResp[i].car.mileage + 'km</p>\n' +
@@ -219,3 +219,32 @@ function fetchCars() {
     });
 }
 
+/*
+Filters out ads according to the car brand being typed into search bar.
+ */
+function filterAds(car) {
+    var card = document.getElementsByClassName("car-brand");
+    for (var i = 0; i < card.length; i++) {
+        var innerText = card[i].innerText;
+        var carBrand = innerText.substring("Car brand: ".length, innerText.length);
+        if (!carBrand.toLowerCase().startsWith(car.toLowerCase())) {
+            $(card[i]).closest(".card.card-margin.border.border-info").hide();
+        }
+    }
+}
+
+/*
+Once the search bar from a particular car becomes empty, shows all ads.
+This is done by the event listener.
+ */
+$(document).ready(function() {
+    var search = document.getElementById('findCar');
+    search.addEventListener('input', function (evt) {
+        if (search.value.length === 0) {
+            var cards = document.getElementsByClassName('card card-margin border border-info');
+            for (var i = 0; i < cards.length; i++) {
+                $(cards[i]).show();
+            }
+        }
+    });
+});
