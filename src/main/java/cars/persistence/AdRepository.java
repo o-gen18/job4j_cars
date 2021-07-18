@@ -13,8 +13,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 
-public class AdRepository implements AutoCloseable {
-    private static final AdRepository INSTANCE = new AdRepository();
+public class AdRepository implements Repository, AutoCloseable {
+    private static final Repository INSTANCE = new AdRepository();
 
     private final StandardServiceRegistry registry =
             new StandardServiceRegistryBuilder().configure().build();
@@ -40,7 +40,7 @@ public class AdRepository implements AutoCloseable {
         }
     }
 
-    public static AdRepository instOf() {
+    public static Repository instOf() {
         return INSTANCE;
     }
 

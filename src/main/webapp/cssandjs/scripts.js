@@ -62,7 +62,7 @@ function fetchAds() {
                 '            <img class="card-img-top" src="data:image/jpeg;base64,' + jsonResp[i].car.photo.photo + '" alt="Here might be a photo" onerror="this.onerror=null;this.src=\'img/noPhoto.jpeg\';" style="max-width: 100%; height: 15rem">\n' +
                 '            <div class="card-body">\n' +
                 '                <h5 class="card-title"><b>' + jsonResp[i].name + '</b></h5>\n' +
-                '                <p class="card-text" hidden="true"><b>Published: </b>' + new Date(jsonResp[i].created).toUTCString() + '</p>\n' +
+                '                <p class="card-text" hidden="true"><b>Published: </b>' + new Date(jsonResp[i].created).toLocaleString() + '</p>\n' +
                 '                <p class="card-text car-brand"><b>Car brand: </b>' + jsonResp[i].car.name + '</p>\n' +
                 '                <p class="card-text"><b>Model: </b>' + jsonResp[i].car.carModel.name + '</p>\n' +
                 '                <p class="card-text"><b>Year of issue: </b>' + jsonResp[i].car.yearOfIssue + '</p>\n' +

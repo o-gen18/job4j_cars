@@ -1,6 +1,10 @@
 # Sales of cars
 This is an online service for the sale of cars.
 
+[![Build Status](https://travis-ci.com/o-gen18/job4j_cars.svg?branch=master)](https://travis-ci.com/o-gen18/job4j_cars)
+[![codecov](https://codecov.io/gh/o-gen18/job4j_cars/branch/master/graph/badge.svg?token=ADTVVOK8PW)](https://codecov.io/gh/o-gen18/job4j_cars)
+---
+
 #### Functionality:
 
 - Registering and logging in the system to be able to post an ad.

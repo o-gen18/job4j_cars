@@ -44,7 +44,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-car-alt"></i></span>
                 </div>
-                <input class="form-control" id="car" list="cars" name="car" placeholder="Specify the car brand">
+                <input class="form-control" id="car" list="cars" name="car" placeholder="Specify the car brand" required>
                 <input type="hidden" id="carHolder" value="<c:out value="${car}"/>">
                 <datalist id="cars">
                 </datalist>
@@ -54,7 +54,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-car"></i></span>
                 </div>
-                <input class="form-control" id="carModel" list="carModels" name="carModel" placeholder="Specify the car model">
+                <input class="form-control" id="carModel" list="carModels" name="carModel" placeholder="Specify the car model" required>
                 <input type="hidden" id="carModelHolder" value="<c:out value="${carModel}"/>">
                 <datalist id="carModels">
                 </datalist>
@@ -66,7 +66,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 512 512" width="16"><path d="m512 120v-120h-160v120h60v101.363281c-6.066406 3.511719-11.125 8.570313-14.636719 14.636719h-84.804687c-8.253906-23.277344-30.484375-40-56.558594-40s-48.304688 16.722656-56.558594 40h-84.804687c-3.320313-5.730469-8.011719-10.566406-13.636719-14.042969v-101.957031h59v-120h-160v120h61v100.792969c-12.503906 6.765625-21 19.992187-21 35.207031s8.496094 28.441406 21 35.207031v100.792969h-61v120h160v-120h-59v-101.957031c5.625-3.476563 10.316406-8.3125 13.636719-14.042969h84.804687c8.253906 23.277344 30.484375 40 56.558594 40s48.304688-16.722656 56.558594-40h84.804687c3.511719 6.066406 8.570313 11.125 14.636719 14.636719v101.363281h-60v120h160v-120h-60v-101.363281c11.953125-6.917969 20-19.832031 20-34.636719s-8.046875-27.71875-20-34.636719v-101.363281zm-472-80h80v40h-80zm80 432h-80v-40h80zm352 0h-80v-40h80zm-216-196c-11.027344 0-20-8.972656-20-20s8.972656-20 20-20 20 8.972656 20 20-8.972656 20-20 20zm136-236h80v40h-80zm0 0"/></svg>
                     </span>
                 </div>
-                <select class="form-control" name="carDrive">
+                <select class="form-control" name="carDrive" required>
                     <option value="" disabled selected>Select a car drive</option>
                     <option value="FRONT_WHEEL_DRIVE">Front-wheel drive</option>
                     <option value="REAR_WHEEL_DRIVE">Rear-wheel drive</option>
@@ -80,7 +80,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg"  height="16" viewBox="0 0 512 512" width="16"><path d="m255 .663c-140.931 0-255 114.05-255 255 13.272 338.27 496.768 338.195 510-.002 0-140.926-114.049-254.998-255-254.998zm0 60c97.323 0 178.219 71.668 192.692 165h-385.383c14.472-93.331 95.368-165 192.691-165zm15 255h-30v-30h30zm-200.543 0h43.543c53.485 0 97 43.514 97 97v32.749c-66.369-15.737-119.712-65.487-140.543-129.749zm230.543 129.749v-32.749c0-53.486 43.514-97 97-97h43.543c-20.831 64.262-74.174 114.012-140.543 129.749z"/></svg>
                     </span>
                 </div>
-                <select class="form-control" name="steeringWheel">
+                <select class="form-control" name="steeringWheel" required>
                     <option value="" disabled selected>Select steering wheel position</option>
                     <option value="LEFT_HAND_DRIVE">Left-hand drive</option>
                     <option value="RIGHT_HAND_DRIVE">Right-hand drive</option>
@@ -90,7 +90,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-truck-monster"></i></span>
                 </div>
-                <select class="form-control" name="bodyType">
+                <select class="form-control" name="bodyType" required>
                     <option value="" disabled selected>Specify the body type</option>
                     <option value="Sedan">Sedan</option>
                     <option value="Coupe">Coupe</option>
@@ -107,7 +107,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-cogs"></i></span>
                 </div>
-                <select class="form-control" name="transmission">
+                <select class="form-control" name="transmission" required>
                     <option value="" disabled selected>Select transmission</option>
                     <option value="Manual">Manual</option>
                     <option value="Automatic">Automatic</option>
@@ -120,7 +120,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-gas-pump"></i></span>
                 </div>
-                <select class="form-control" name="fuelType">
+                <select class="form-control" name="fuelType" required>
                     <option value="" disabled selected>Select the fuel type</option>
                     <option value="Gasoline">Gasoline</option>
                     <option value="Diesel">Diesel</option>

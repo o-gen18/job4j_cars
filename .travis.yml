@@ -1,0 +1,31 @@
+# используем язык java. Travis CI поддерживает другие языки тоже.
+language: java
+
+jdk:
+- openjdk15
+
+services:
+- postgresql
+
+before_install:
+- psql -c 'create database job4j_cars;' -U postgres
+
+cache:
+  directories:
+    - $HOME/.m2
+
+sudo: false
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+notifications:
+  email:
+    recipients:
+      oggen18@gmail.com
+    on_success: never # default: change
+    on_failure: always # default: always
+
+env:
+    global:
+      - CODECOV_TOKEN='bf3ffc9f-5622-4939-b4bd-3ddcab84dc10'

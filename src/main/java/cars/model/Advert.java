@@ -17,10 +17,10 @@ public class Advert {
     @Column(nullable = false)
     private int price;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "text")
     private String description;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "text", nullable = false)
     private String address;
 
     @Column(nullable = false)

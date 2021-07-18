@@ -2,6 +2,7 @@ package cars.controller;
 
 import cars.model.*;
 import cars.persistence.AdRepository;
+import cars.utils.AdBuilder;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -14,18 +15,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CreateAdServlet extends HttpServlet {
     private Map<String, String> formValues = new HashMap<>();
+    private AdBuilder adBuilder = new AdBuilder();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, ServletException {
-        req.setCharacterEncoding("UTF-8");
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletContext servletContext = this.getServletConfig().getServletContext();
         File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
@@ -47,41 +47,14 @@ public class CreateAdServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        Engine engine = Engine.of(
-                Engine.FuelType.valueOf(formValues.get("fuelType")),
-                Double.parseDouble(formValues.get("volume"))
-        );
-
-        CarModel carModel = CarModel.of(
-                formValues.get("carModel"),
-                CarModel.CarDrive.valueOf(formValues.get("carDrive")),
-                CarModel.SteeringWheel.valueOf(formValues.get("steeringWheel"))
-        );
-
-        Car car = Car.of(
-                formValues.get("car"),
-                Integer.parseInt(formValues.get("mileage")),
-                Integer.parseInt(formValues.get("yearOfIssue")),
-                engine,
-                carModel,
+        Advert ad = adBuilder.buildAd(
+                formValues,
                 carPhoto,
-                Car.BodyType.valueOf(formValues.get("bodyType")),
-                Car.Transmission.valueOf(formValues.get("transmission"))
-        );
-
-        Advert advert = Advert.of(
-                formValues.get("advert"),
-                Integer.parseInt(formValues.get("price")),
-                formValues.get("description"),
-                formValues.get("address"),
-                new Date(),
-                car,
-                (Seller) req.getSession().getAttribute("Seller")
-        );
+                (Seller) req.getSession().getAttribute("Seller"));
 
         AdRepository.instOf().save(carPhoto);
-        if (AdRepository.instOf().saveCar(car) != null) {
-            AdRepository.instOf().save(advert);
+        if (AdRepository.instOf().saveCar(ad.getCar()) != null) {
+            AdRepository.instOf().save(ad);
         }
         resp.sendRedirect(req.getContextPath() + "/index.jsp");
     }
