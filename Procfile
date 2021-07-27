@@ -1,0 +1,1 @@
+web: java -jar target\dependency\webapp-runner.jar job4j_cars-1.0-SNAPSHOT.war
