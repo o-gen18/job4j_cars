@@ -46,12 +46,13 @@ Hides some of the details of an ad that may be seen by clicking 'details' button
 function fetchAds() {
     $.ajax({
         method: 'GET',
-        url: 'http://localhost:8080/job4j_cars/fetchAds',
+        url: 'fetchAds',
         dataType: 'json'
     }).done(function(data) {
         const jsonResp = JSON.parse(JSON.stringify(data));
         if (jsonResp.length === 0) {
-            $('#box').append('<div class="card card-margin">No ads with cars yet :(<div/>');
+            document.getElementById('loading').innerHTML =
+                '<h1 class="header">No ads with cars yet :(</h1>';
             return;
         }
         for (var i in jsonResp) {
@@ -82,6 +83,9 @@ function fetchAds() {
             document.getElementById('box').appendChild(card);
         }
         document.getElementById('loading').remove();
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        alert('textStatus: ' + textStatus + '\n' + 'errorThrown: ' + errorThrown + '\n' + 'responseText:' + jqXHR.responseText
+            + '\n' + 'jqXHR.statusText: ' + jqXHR.statusText);
     });
 }
 
@@ -98,7 +102,7 @@ Changes sale status of an an to the opposite. Uses ajax call to the server.
 function updateStatus(card, status) {
     $.ajax({
         type: 'POST',
-        url: 'http://localhost:8080/job4j_cars/updateAdStatus',
+        url: 'updateAdStatus',
         data: {
             adId: card.getAttribute('id'),
             status: status
@@ -139,7 +143,7 @@ Deletes an ad using ajax requst to the server.
 function deleteAd(card) {
     $.ajax({
         type: 'POST',
-        url: 'http://localhost:8080/job4j_cars/deleteAd',
+        url: 'deleteAd',
         data: {
             adId: card.getAttribute('id'),
         },
@@ -172,7 +176,10 @@ function showDetails(cardBody) {
     var cardClone = card.cloneNode(true);
     cardClone.className = "container";
 
+
     details.appendChild(cardClone);
+    const img = details.querySelector("img");
+    img.style.objectFit = 'contain';
     details.querySelectorAll("p").forEach(child => child.removeAttribute("hidden"));
     cardClone.querySelectorAll("button").forEach(btn => btn.remove());
     document.getElementById('detailsBackground').style.display = 'inline-block';
@@ -198,7 +205,7 @@ so that a user can choose those from existing ones.
 function fetchCars() {
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/job4j_cars/fetchCars',
+        url: 'fetchCars',
         dataType: 'json',
     }).done(function (data) {
         var jsonResp = JSON.parse(JSON.stringify(data));
@@ -214,8 +221,9 @@ function fetchCars() {
             $('#cars').append('<option value="' + jsonResp[i].name + '">');
             $('#carModels').append('<option value="' + jsonResp[i].carModel.name + '">');
         }
-    }).fail(function (err) {
-        alert(err);
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        alert('textStatus: ' + textStatus + '\n' + 'errorThrown: ' + errorThrown + '\n' + 'responseText:' + jqXHR.responseText
+            + '\n' + 'jqXHR.statusText: ' + jqXHR.statusText);
     });
 }
 

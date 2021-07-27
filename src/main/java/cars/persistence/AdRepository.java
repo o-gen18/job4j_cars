@@ -8,21 +8,29 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 
 public class AdRepository implements Repository, AutoCloseable {
     private static final Repository INSTANCE = new AdRepository();
 
-    private final StandardServiceRegistry registry =
-            new StandardServiceRegistryBuilder().configure().build();
+    private final StandardServiceRegistry registry;
 
-    private final SessionFactory sf =
-            new MetadataSources(registry).buildMetadata().buildSessionFactory();
+    private final SessionFactory sf;
 
     private AdRepository() {
+        Map<String, String> jdbcUrlSettings = new HashMap<>();
+        String jdbcDbUrl = System.getenv("JDBC_DATABASE_URL");
+        if (null != jdbcDbUrl) {
+            jdbcUrlSettings.put("hibernate.connection.url", System.getenv("JDBC_DATABASE_URL"));
+        }
+
+        registry = new StandardServiceRegistryBuilder().
+                configure("hibernate.cfg.xml").
+                applySettings(jdbcUrlSettings).
+                build();
+
+        sf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
 
     private <T> T doTransaction(final Function<Session, T> query) {
