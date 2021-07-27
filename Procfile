@@ -1,1 +1,1 @@
-web: java -jar target/dependency/webapp-runner.jar target/job4j_cars-1.0-SNAPSHOT.war
+web: java -jar target/dependency/webapp-runner.jar --port --port $PORT target/job4j_cars-1.0-SNAPSHOT.war
